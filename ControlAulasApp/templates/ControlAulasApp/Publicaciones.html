@@ -1,0 +1,28 @@
+{% extends "ControlAulasApp/index.html" %}
+{%load static%}
+
+
+
+{% block contenido %}
+
+
+
+    <div class="text-center">
+
+
+  <img src="{{ detalle_publicacion.imagen.url }}" alt ="">
+
+
+        <h1>{{detalle_publicacion.titulo}}</h1>
+        <h3 style="text-align: justify">{{detalle_publicacion.descripcion | safe }}</h3>
+        <br>
+        <p  style="text-align: justify">{{detalle_publicacion.contenido | safe }}</p>
+
+     {% if detalle_publicacion.imagen2.url is not detalle_publicacion.imagen2.url %}
+    <img src="{{ detalle_publicacion.imagen2.url }}" alt ="" width="800" height="800">
+    {% endif %}
+    </div>
+
+
+
+{% endblock contenido %}

@@ -1,0 +1,147 @@
+
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> {{ titulo }}</title>
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+    <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/quill/quill.snow.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/quill/quill.bubble.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/simple-datatables/style.css' %}" rel="stylesheet">
+     <link href="{% static 'img/favicon.png' %}" rel="icon">
+     <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+     <link href="https://fonts.gstatic.com" rel="preconnect">
+     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+       <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+       <link rel="" href="https://cdn.datatables.net/fixedheader/3.1.6/css/fixedHeader.dataTables.min.css">
+      <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+      <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+      <script src="https://cdn.datatables.net/fixedheader/3.1.6/js/dataTables.fixedHeader.min.js"></script>
+
+    <link href="{% static 'css/slider.css' %}" rel="stylesheet">
+
+      <script>
+
+
+$(document).ready(function(){
+    var table = $('#example').DataTable({
+       orderCellsTop: true,
+       fixedHeader: true,
+         "language": {
+      "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+    }
+    });
+});
+
+</script>
+
+
+</head>
+
+<body>
+
+<section>
+{#<img src="html/imagenes/prueba.jpg" style="max-width:100%;width:auto;height:auto;">#}
+{#<div class="container.container{height: 100%;} py-4 "  >#}
+<div class="container-fluid py-4 "  >
+    <div class="row">
+    <div class="col-lg-5"  >
+
+
+        <div id ="img-slider">
+    <ul class="slider">
+        <li id="slide1">
+            <img src="{% static 'img/Limpieza.jpg' %}" alt="" >
+{#            <img src="https://interpolados.files.wordpress.com/2016/12/content-https-2x.jpg" alt="">#}
+        </li>
+        <li id="slide2">
+            <img src="https://www.globalsign.com/application/files/3916/0397/8810/iStock-833750208.png" alt="">
+{#            <h1></h1><p></p><a></a>#}
+        </li>
+    </ul>
+
+    <ul class="menu">
+        <li>
+            <a href="#slide1">1</a>
+        </li>
+        <li>
+            <a href="#slide2">2</a>
+        </li>
+
+    </ul>
+</div>
+
+{#       <img src="{% static 'img/Limpieza.jpg' %}" alt="" width="650" height="800">#}
+
+
+
+
+
+       </div>
+
+        <div class="col-lg-7">
+        <h2>Programacion de limpieza y desinfeccion</h2>
+            <div class="table-responsive">
+                <table id="example" class="table table-hover table-striped table-bordered table-secondary">
+          <thead>
+          <tr>
+              <th>#</th>
+              <th>Nombre del personal</th>
+              <th>Sala</th>
+              <th>Dia</th>
+              <th>Hora</th>
+              <th>Observacion</th>
+              <th colspan="1">Opcion</th>
+          </tr>
+
+          </thead>
+          <tbody>
+                  {% for h in entity %}
+                      <tr>
+                      <td>{{ forloop.counter }}</td>
+                      <td>{{ h.nombre_completo  }}</td>
+                      <td>{{ h.asignacion }}</td>
+                       <td>{{ h.dia }}</td>
+                       <td>{{ h.hora }}</td>
+                       <td>{{ h.observacion }}</td>
+                      <td><a href="{% url 'edicionTabla' h.id %}" class="btn btn-block btn-info"><i class="bi bi-pencil"></i>Editar</a></td>
+                      </tr>
+          {% endfor %}
+          </tbody>
+      </table>
+            <div>
+                {% include 'ControlAulasApp/paginator.html' %}
+            </div>
+
+            <div>
+                <td><a href="{% url 'index' %}" class="btn btn-block btn-primary">Inicio</a></td>
+            </div>
+
+                {% if messages %}
+                {% for m in messages %}
+                    <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show" role="alert">
+                {{ m }}
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+                 {% endfor %}
+            {% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</section>
+</body>
+</html>
