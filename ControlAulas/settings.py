@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-zkwwgq0(3=4dh40(@)zu3m)dm)x-mt$p+o@fsi4-fi9q9isovy
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['controlaulas.herokuapp.com', '127.0.0.1', 'localhost','*']
+
 
 # CK EXTENDIDO
 CKEDITOR_CONFIGS = {
