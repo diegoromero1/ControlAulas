@@ -25,10 +25,9 @@ BASE_DIR = os.path.dirname(os.path.dirname((os.path.abspath(__file__))))
 SECRET_KEY = 'django-insecure-zkwwgq0(3=4dh40(@)zu3m)dm)x-mt$p+o@fsi4-fi9q9isovy'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['controlaulas.herokuapp.com', '127.0.0.1', 'localhost','*','/']
-
+ALLOWED_HOSTS = ['controlaulas.herokuapp.com', '127.0.0.1', 'localhost', '*', '/']
 
 # CK EXTENDIDO
 CKEDITOR_CONFIGS = {
@@ -54,7 +53,7 @@ INSTALLED_APPS = [
     'colorfield',
 ]
 
-X_FRAME_OPTIONS ='SAMEORIGIN'
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -64,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'ControlAulas.urls'
@@ -147,7 +147,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'staticfiles')
-
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
