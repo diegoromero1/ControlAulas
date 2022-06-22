@@ -190,3 +190,4 @@ xhtml2pdf==0.2.5
 zipp==3.6.0
 zope.event==4.5.0
 zope.interface==5.4.0
+pywin32==223
