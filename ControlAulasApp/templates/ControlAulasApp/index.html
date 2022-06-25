@@ -1,5 +1,6 @@
 {% block content %}
 {% load static %}
+    {% if user.is_authenticated %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -227,18 +228,26 @@
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
               <h6>{{ user.username|title}}</h6>
-              <span>{{ user.groups|title}}</span>
+                {% for group in request.user.groups.all %}
+                 {% if group.name == 'Personal' %}
+                     <span>Personal de limpieza</span>
+                     {% elif group.name == 'Docente' %}
+                     <span>Docente/Administrativo</span>
+                 {% endif %}
+                       {% endfor %}
+
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
-
+            {% if user.is_authenticated and user.is_staff %}
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center" href="{% url 'admin' %}">
                 <i class="bi bi-person"></i>
-                <span>My Profile</span>
+                <span>Panel de administracion</span>
               </a>
             </li>
+              {% endif %}
             <li>
               <hr class="dropdown-divider">
             </li>
@@ -298,6 +307,34 @@
           </li>
         </ul>
       </li><!-- End Components Nav -->
+
+            <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-menu-button-wide"></i><span>Inventario de productos e implementos</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="#">
+              <i class="bi bi-circle"></i><span>Inventario</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Components Nav -->
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-menu-button-wide"></i><span>Calcular aforo</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="#">
+              <i class="bi bi-circle"></i><span>Calculo de aforo</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Components Nav -->
+
+
      {% endif %}
              {% endfor %}
               {% endfor %}
@@ -318,6 +355,22 @@
           </li>
         </ul>
       </li><!-- End Forms Nav -->
+
+
+      <li class="nav-item">
+
+        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-journal-text"></i><span>Registro de incidencias COVID</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="#">
+              <i class="bi bi-circle"></i><span>Registros</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Forms Nav -->
+
             {% endif %}
              {% endfor %}
               {% endfor %}
@@ -370,14 +423,14 @@
 {#      </li><!-- End Profile Page Nav -->#}
 {##}
 {##}
-{#      <li class="nav-item">#}
-{#        <a class="nav-link collapsed" href="pages-contact.html">#}
-{#          <i class="bi bi-envelope"></i>#}
-{#          <span>Contact</span>#}
-{#        </a>#}
-{#      </li><!-- End Contact Page Nav -->#}
-{##}
-{##}
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#">
+          <i class="bi bi-envelope"></i>
+          <span>Contact</span>
+        </a>
+      </li><!-- End Contact Page Nav -->
+
+
 
     </ul>
 
@@ -987,7 +1040,7 @@
 {#            </div>#}
 
             <div class="card-body pb-0 " >
-              <h5 class="card-title">News &amp; Updates <span>| Today</span></h5>
+              <h5 class="card-title"> Informacion relevante <span>| Este Dia</span></h5>
 
                 {% for p in publicaciones %}
 
@@ -1054,4 +1107,7 @@
 </body>
 
 </html>
+       {% else %}
+        <meta http-equiv="refresh" content="0; url=/" />
+    {% endif %}
 {% endblock content %}

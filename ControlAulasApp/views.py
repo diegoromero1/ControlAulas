@@ -43,7 +43,7 @@ def Estados(request):
     page = request.GET.get('page', 1)
 
     try:
-        paginator = Paginator(tablaEstados, 4)
+        paginator = Paginator(tablaEstados, 6)
         tablaEstados = paginator.page(page)
     except:
         raise Http404
@@ -62,7 +62,7 @@ def Horarios(request):
     page = request.GET.get('page', 1)
 
     try:
-        paginator = Paginator(tablaHorarios, 4)
+        paginator = Paginator(tablaHorarios, 5)
         tablaHorarios = paginator.page(page)
     except:
         raise Http404
@@ -142,6 +142,9 @@ def descarga(request):
 
     }
     return render(request, 'ControlAulasApp/descarga.html', context)
+
+def Admin(request):
+    return render(request, "ControlAulasApp/admin.html")
 
 
 def Detallepublicaciones(request, slug):

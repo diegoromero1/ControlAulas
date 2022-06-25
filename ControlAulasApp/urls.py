@@ -40,6 +40,8 @@ urlpatterns = [
 
     path('descarga/', descarga, name="descarga"),
 
+    path('admin/', views.Admin, name="admin"),
+
     path('<str:slug>/', Detallepublicaciones, name="Detalle_publicaciones"),
 
 ]

@@ -1,6 +1,7 @@
 {% extends "ControlAulasApp/index.html" %}
 {%load static%}
 {% block contenido %}
+     {% if user.is_authenticated %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -85,4 +86,7 @@ $(document).ready(function(){
 
 </body>
 </html>
+    {% else %}
+        <meta http-equiv="refresh" content="0; url=/" />
+    {% endif %}
 {% endblock contenido %}

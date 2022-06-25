@@ -12,8 +12,8 @@ class EstadoAula(models.Model):
     sector = models.CharField('Sector',max_length=30, blank=True)
 
     def __str__(self):
-        texto = "{0} ({1})"
-        return texto.format(self.nombreSala, self.estado)
+
+        return self.nombreSala
 
     def Estado_Salas(self):
         if self.estado.upper() == 'habilitada'.upper():
@@ -29,7 +29,7 @@ class Horario(models.Model):
     apellidosPersonal = models.CharField(max_length=20, verbose_name="apellidos del personal")
     asignacion = models.CharField(max_length=40, verbose_name="asignacion sala")
     hora = models.CharField(max_length=20, verbose_name="hora")
-    dia = models.CharField(max_length=20, verbose_name="dia")
+    dia = models.CharField(max_length=40, verbose_name="dia")
     observacion = models.TextField(blank=True, null=True, verbose_name="observacion detectada")
 
     def nombre_completo(self):

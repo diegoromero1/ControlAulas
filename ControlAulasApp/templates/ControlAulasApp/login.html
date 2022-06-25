@@ -4,10 +4,11 @@
 <html lang="en">
 
 <head>
+
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Pages / Login - NiceAdmin Bootstrap Template</title>
+  <title>Login ControlAulas</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -40,6 +41,16 @@
 </head>
 
 <body>
+{% if user.is_authenticated %}
+
+
+<!-- CAMBIAR X LINK DEL SERVIDOR -->
+
+<meta http-equiv="refresh" content="0; url=inicio/" />
+
+<!-- FIN REDIRECCION -->
+
+{% else %}
 
   <main>
     <div class="container">
@@ -52,7 +63,8 @@
               <div class="d-flex justify-content-center py-4">
                 <a href="" class="logo d-flex align-items-center w-auto">
                   <img src="{% static 'img/logo.png' %}" alt="">
-                  <span class="d-none d-lg-block">ControlAulas</span>
+                    <h5 class="card-title text-center pb-0 fs-4">ControlAulas</h5>
+
                 </a>
               </div><!-- End Logo -->
 
@@ -69,7 +81,7 @@
                        {% csrf_token %}
 
                     <div class="col-12">
-                      <label for="yourUsername" class="form-label">Username</label>
+                      <label for="yourUsername" class="form-label">Nombre de usuario</label>
                       <div class="input-group has-validation">
                         <span class="input-group-text" id="inputGroupPrepend">@</span>
                         <input type="text" name="username" class="form-control" id="yourUsername" required>
@@ -83,8 +95,9 @@
                       <div class="invalid-feedback">Please enter your password!</div>
                     </div>
                       <div class="nav-item px-lg-4">
-            <a class="nav-link text-small text-center" type="submit" href="{% url 'reset_password' %}"><u><i>Haz olvidado tu contraseña?</u></i</a>
+            <a class="nav-link text-small text-center" type="submit" href="{% url 'reset_password' %}"><u><i>Has olvidado tu contraseña?</u></i</a>
           </div>
+
 
 
 {#                    <div class="col-12">#}
@@ -99,6 +112,11 @@
 {#                    <div class="col-12">#}
 {#                      <p class="small mb-0">Don't have account? <a href="#">Create an account</a></p>#}
 {#                    </div>#}
+                      {% if form.errors %}
+                       <div class="alert alert-danger" role="alert">
+                         Tu contraseña y/o usuario son incorrectos
+                         </div>
+                         {% endif %}
                   </form>
 
                 </div>
@@ -139,4 +157,5 @@
 </body>
 
 </html>
+{% endif %}
 {% endblock %}

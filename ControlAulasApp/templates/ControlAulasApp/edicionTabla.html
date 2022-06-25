@@ -1,6 +1,7 @@
 
 {% block content %}
 {% load static %}
+    {% if user.is_authenticated %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,4 +58,7 @@
 
 </body>
 </html>
+    {% else %}
+        <meta http-equiv="refresh" content="0; url=/" />
+    {% endif %}
 {% endblock content %}

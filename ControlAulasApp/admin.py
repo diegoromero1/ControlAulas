@@ -6,13 +6,13 @@ from .models import EstadoAula, Horario, Publicacion, Archivo
 
 @admin.register(EstadoAula)
 class EstadoAdmin(admin.ModelAdmin):
-    list_display = ('id', 'nombreSala', 'Estado_Salas')
+    list_display = ('id', 'nombreSala', 'estado', 'aforo', 'sector')
     # ordering = ('nombreSala')
     # search_fields = ('nombre')
     # list_display_links = ('nombreSala')
     # list_per_page = 3     #paginacion
-    # list_editable = ('nombreSala','estado')
-    list_filter = ('nombreSala', 'estado')
+    list_filter = ('nombreSala', 'estado', 'sector')
+    list_editable = ('estado', )
 
     def datos(self, obj):
         return obj.nombre.upper()
@@ -21,7 +21,8 @@ class EstadoAdmin(admin.ModelAdmin):
 @admin.register(Horario)
 class HorarioAdmin(admin.ModelAdmin):
     list_display = ('id', 'nombre_completo', 'asignacion', 'dia', 'hora')
-    list_filter = ('dia', 'asignacion')
+    list_filter = ('dia', 'asignacion', 'apellidosPersonal')
+    list_editable = ('dia', 'hora', 'asignacion')
 
     def datos(self, obj):
         return obj.nombre.upper()
@@ -29,11 +30,20 @@ class HorarioAdmin(admin.ModelAdmin):
 
 @admin.register(Publicacion)
 class PublicacionAdmin(admin.ModelAdmin):
-    list_display = ('id', 'titulo',)
-
-    # list_filter = ('dia', 'asignacion')
+    list_display = ('id', 'titulo', 'descripcion')
+    list_filter = ('titulo', 'descripcion')
 
     def datos(self, obj):
         return obj.nombre.upper()
+
+
 # admin.site.register(EstadoAula)
-admin.site.register(Archivo)
+
+
+@admin.register(Archivo)
+class ArchivoAdmin(admin.ModelAdmin):
+    list_display = ('id', 'titulo', 'descripcion')
+    list_filter = ('titulo',)
+
+    def datos(self, obj):
+        return obj.nombre.upper()
