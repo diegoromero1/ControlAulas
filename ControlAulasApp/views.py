@@ -1,18 +1,20 @@
 # Create your views here.
 import os
 
-from django.http import Http404
-from django.urls import reverse_lazy
-from django.views.generic import TemplateView, ListView
-
-from ControlAulas import settings
-from ControlAulasApp.forms import PasswordChangingForm, HorarioForm
-from ControlAulasApp.models import EstadoAula, Horario, Publicacion, Archivo
-from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.contrib import messages
-from django.contrib.auth.models import User
 from django.contrib.auth.views import PasswordChangeView
 from django.core.paginator import Paginator
+from django.http import Http404
+from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
+from django.urls import reverse_lazy
+from django.views.generic import ListView
+
+from ControlAulas import settings
+from ControlAulasApp.forms import PasswordChangingForm, HorarioForm, RegistroIncidenciaForm, AgregarIncidenciaForm, \
+    InventarioForm, RetiroInventarioForm, AforoForm
+from ControlAulasApp.models import EstadoAula, Horario, Publicacion, Archivo, RegistroIncidencia, Inventario, \
+    RetiroInventario, Aforo
+import logging
 
 
 def IndexView(request):
@@ -108,7 +110,7 @@ def edicion_tabla(request, id):
         formulario = HorarioForm(data=request.POST, instance=horario, files=request.FILES)
         if formulario.is_valid():
             formulario.save()
-            messages.success(request, "Modificado ccrrectamente")
+            messages.success(request, "Modificado correctamente")
             return redirect(to="horario")
         data["form"] = formulario
 
@@ -142,6 +144,187 @@ def descarga(request):
 
     }
     return render(request, 'ControlAulasApp/descarga.html', context)
+
+
+def RegistroIncidencias(request):
+    tablaRegistros = RegistroIncidencia.objects.all()
+
+    page = request.GET.get('page', 1)
+
+    try:
+        paginator = Paginator(tablaRegistros, 6)
+        tablaRegistros = paginator.page(page)
+    except:
+        raise Http404
+
+    data = {
+        'titulo': 'Registro de incidencias',
+        'entity': tablaRegistros,
+        'paginator': paginator
+    }
+
+    return render(request, "ControlAulasApp/incidencias.html", data)
+
+
+def edicion_tabla_incidencias(request, id):
+    incidencia = get_object_or_404(RegistroIncidencia, id=id)
+
+    data = {
+        'form': RegistroIncidenciaForm(instance=incidencia)
+    }
+
+    if request.method == 'POST':
+        formulario = RegistroIncidenciaForm(data=request.POST, instance=incidencia, files=request.FILES)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request, "Modificado correctamente")
+            return redirect(to="incidencias")
+        data["form"] = formulario
+
+    return render(request, "ControlAulasApp/edicionTablaIncidencia.html", data)
+
+
+def agregarIncidencia(request):
+    data = {
+        'form': AgregarIncidenciaForm()
+    }
+
+    if request.method == 'POST':
+        formulario = AgregarIncidenciaForm(data=request.POST, files=request.FILES)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request, "Modificado correctamente")
+            return redirect(to="incidencias")
+        data["form"] = formulario
+
+    return render(request, "ControlAulasApp/agregarIncidencia.html", data)
+
+
+def Inventarios(request):
+    tablaInventario = Inventario.objects.all()
+    tablaRetiro = RetiroInventario.objects.all()
+
+    page = request.GET.get('page', 1)
+
+    try:
+
+        paginator = Paginator(tablaRetiro, 6)
+
+        tablaRetiro = paginator.page(page)
+    except:
+        raise Http404
+
+    data = {
+        'titulo': 'Inventario',
+        'entity2': tablaInventario,
+        'entity': tablaRetiro,
+
+        'paginator': paginator,
+    }
+
+    return render(request, "ControlAulasApp/inventario.html", data)
+
+
+def inventario_retiro(request):
+    data = {
+        'form': RetiroInventarioForm,
+    }
+
+    if request.method == 'POST':
+        formulario = RetiroInventarioForm(data=request.POST, files=request.FILES)
+        variable = request.POST.get('producto')
+        print("este es EL NOMBRE", variable)
+        if formulario.is_valid():
+
+            formulario.save()
+
+            messages.success(request, "Modificado correctamente")
+            # print("hola mundo", RetiroInventario.objects.get('producto'))
+            # ultimo = len(RetiroInventario.objects.all())
+            # print("Cantidad", ultimo)
+            # n = RetiroInventario.objects.get('nombrePersonal')[(ultimo-1):ultimo]
+            n = RetiroInventario.objects.order_by('id').last()
+            # print("hola mundo", n.producto)
+
+            for b in Inventario.objects.all():
+
+                if n.producto == b.nombreProducto:
+                    # print("AQUI ESTA", b)
+                    total = b.cantidadAlmacenada - n.cantidadUtilizada
+
+                    update = Inventario.objects.values('cantidadAlmacenada').filter(id=b.id).update(
+                        cantidadAlmacenada=total)
+                    # print("PRODUCTO", b.nombreProducto)
+                    formulario.save()
+
+            return redirect(to="inventario")
+        data["form"] = formulario
+
+    return render(request, "ControlAulasApp/retiroInventario.html", data)
+
+
+def aforoview(request):
+    calculo = Aforo.objects.all()
+    page = request.GET.get('page', 1)
+
+    try:
+        paginator = Paginator(calculo, 6)
+        calculo = paginator.page(page)
+    except:
+        raise Http404
+
+    data = {
+        'titulo': 'Aforo',
+        'entity': calculo,
+        'paginator': paginator
+    }
+    return render(request, 'ControlAulasApp/aforo.html', data)
+
+
+def calcularAforo(request):
+    data = {
+        'form': AforoForm
+    }
+
+    if request.method == 'POST':
+        formulario = AforoForm(data=request.POST, files=request.FILES)
+        if formulario.is_valid():
+            formulario.save()
+            messages.success(request, "Modificado correctamente")
+
+            dato = Aforo.objects.order_by('id').last()
+
+            # print("hola mundo", n.producto)
+            c = dato.largoGeneral
+            b = dato.largoDemarcacion
+            columna = 0
+            c -= 200
+            while c > 0:
+
+                if c >= b:
+                    c = c - b
+                    columna += 1
+                c -= 100
+
+            d = dato.anchoGeneral
+            a = dato.anchoDemarcacion
+            fila = 0
+            while d > 0:
+
+                if d >= a:
+                    d = d - a
+                    fila += 1
+                d -= 150
+
+            aforo = columna * fila + 1
+            update = Aforo.objects.values('resultado').filter(id=dato.id).update(resultado=aforo)
+            # print("PRODUCTO", b.nombreProducto)
+
+            return redirect(to="aforo")
+        data["form"] = formulario
+
+    return render(request, "ControlAulasApp/calculoAforo.html", data)
+
 
 def Admin(request):
     return render(request, "ControlAulasApp/admin.html")

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import EstadoAula, Horario, Publicacion, Archivo
+from .models import EstadoAula, Horario, Publicacion, Archivo, RegistroIncidencia, Inventario, RetiroInventario, Aforo
 
 
 # Register your models here.
@@ -12,7 +12,7 @@ class EstadoAdmin(admin.ModelAdmin):
     # list_display_links = ('nombreSala')
     # list_per_page = 3     #paginacion
     list_filter = ('nombreSala', 'estado', 'sector')
-    list_editable = ('estado', )
+    list_editable = ('estado',)
 
     def datos(self, obj):
         return obj.nombre.upper()
@@ -44,6 +44,39 @@ class PublicacionAdmin(admin.ModelAdmin):
 class ArchivoAdmin(admin.ModelAdmin):
     list_display = ('id', 'titulo', 'descripcion')
     list_filter = ('titulo',)
+
+    def datos(self, obj):
+        return obj.nombre.upper()
+
+
+@admin.register(RegistroIncidencia)
+class RegistroIncidenciaAdminAdmin(admin.ModelAdmin):
+    list_display = ('id', 'nombre_completo', 'nombreAfectado', 'apellidosAfectado', 'fecha')
+
+    def datos(self, obj):
+        return obj.nombre.upper()
+
+
+@admin.register(Inventario)
+class InventarioAdmin(admin.ModelAdmin):
+    list_display = ('id', 'nombreProducto', 'cantidadAlmacenada')
+
+    def datos(self, obj):
+        return obj.nombre.upper()
+
+
+@admin.register(RetiroInventario)
+class RetiroInventarioAdmin(admin.ModelAdmin):
+    list_display = ('id', 'nombre_completo', 'fecha', 'hora', 'cantidadUtilizada', 'producto')
+
+    def datos(self, obj):
+        return obj.nombre.upper()
+
+
+@admin.register(Aforo)
+class AforoAdmin(admin.ModelAdmin):
+    list_display = ('id', 'nombre', 'largoGeneral', 'anchoGeneral', 'largoDemarcacion', 'anchoDemarcacion')
+    list_filter = ('nombre',)
 
     def datos(self, obj):
         return obj.nombre.upper()

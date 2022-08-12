@@ -1,0 +1,94 @@
+{% extends "ControlAulasApp/index.html" %}
+{%load static%}
+{% block contenido %}
+     {% if user.is_authenticated %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> {{ titulo }}</title>
+
+
+      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+       <link rel="" href="https://cdn.datatables.net/fixedheader/3.1.6/css/fixedHeader.dataTables.min.css">
+      <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+      <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+      <script src="https://cdn.datatables.net/fixedheader/3.1.6/js/dataTables.fixedHeader.min.js"></script>
+
+
+    <script>
+
+
+$(document).ready(function(){
+    var table = $('#example').DataTable({
+       orderCellsTop: true,
+       fixedHeader: true,
+         "language": {
+      "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+    }
+    });
+});
+
+</script>
+
+</head>
+<body>
+<div class="container-fluid py-4">
+    <div class="row">
+{#    <div class="col-md-4"></div>#}
+        <div class="col-md-offset-4">
+        <h2>Calculo de aforo</h2>
+            <div class="table-responsive">
+                <table id="example" class="table table-hover table-striped table-bordered table-secondary">
+          <thead>
+          <tr>
+              <th>#</th>
+              <th>Nombre</th>
+              <th>Largo de sala</th>
+              <th>Ancho de sala</th>
+              <th>Largo de demarcacion</th>
+              <th>Ancho de demarcacion</th>
+              <th>Resultado</th>
+          </tr>
+
+          </thead>
+          <tbody>
+                  {% for a in entity %}
+                      <tr>
+                      <td>{{ forloop.counter }}</td>
+                      <td>{{ a.nombre  }}</td>
+                      <td>{{ a.largoGeneral }}</td>
+                      <td>{{ a.anchoGeneral }}</td>
+                      <td>{{ a.largoDemarcacion }}</td>
+                      <td>{{ a.anchoDemarcacion }}</td>
+                      <td>{{ a.resultado }}</td>
+                      </tr>
+          {% endfor %}
+          </tbody>
+      </table>
+            <div>
+                {% include 'ControlAulasApp/paginator.html' %}
+            </div>
+            <div>
+                   <a href="{% url 'calculoAforo' %}" class="btn btn-block btn-primary">Agregar</a>
+
+            </div>
+
+
+             <div>
+                <td><a href="{% url 'index' %}" class="btn btn-block btn-primary">Inicio</a></td>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>
+    {% else %}
+        <meta http-equiv="refresh" content="0; url=/" />
+    {% endif %}
+{% endblock contenido %}

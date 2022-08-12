@@ -1,0 +1,65 @@
+{% block content %}
+{% load static %}
+    {% if user.is_authenticated %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> {{ titulo }}</title>
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+     <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+    <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/quill/quill.snow.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/quill/quill.bubble.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/simple-datatables/style.css' %}" rel="stylesheet">
+
+     <link href="{% static 'img/favicon.png' %}" rel="icon">
+     <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+     <link href="https://fonts.gstatic.com" rel="preconnect">
+      <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+</head>
+<body>
+
+
+        <div class="row">
+            <div class="col-12 col-md-6 offset-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h2>Agregar calculo de aforo</h2>
+                        <hr>
+                        <form action="" method="post" enctype="multipart/form-data">
+                            <div class="card">
+                             {% csrf_token %}
+                                {{ form.as_table}}
+                               </div>
+                              <div class="d-flex justify-content-center">
+                                  <input type="button" value="Cancelar" class="btn btn-secondary" onclick="history.go(-1);">
+
+                                  <input type="submit" value="Agregar" class="btn btn-primary"/>
+                               </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+
+
+
+</body>
+</html>
+    {% else %}
+        <meta http-equiv="refresh" content="0; url=/" />
+    {% endif %}
+{% endblock content %}

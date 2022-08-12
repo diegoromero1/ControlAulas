@@ -8,7 +8,8 @@ from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 from ControlAulasApp import views
 from ControlAulasApp.views import IndexView, Estados, Detallepublicaciones, \
-    PasswordsChangeView, edicion_tabla, Horarios, descarga
+    PasswordsChangeView, edicion_tabla, Horarios, descarga, RegistroIncidencias, edicion_tabla_incidencias, \
+    agregarIncidencia, Inventarios, inventario_retiro, aforoview,calcularAforo
 
 urlpatterns = [
     path('inicio/', IndexView, name='index'),
@@ -30,9 +31,17 @@ urlpatterns = [
 
     path('estados/', Estados, name='estados'),
     path('horario/', Horarios, name='horario'),
+    path('incidencias/', RegistroIncidencias, name='incidencias'),
+    path('inventario/', Inventarios, name='inventario'),
+    path('aforo/', aforoview, name='aforo'),
 
     # path('registrarObservacion/', registrar_observacion),
     path('edicionTabla/<id>/', edicion_tabla, name="edicionTabla"),
+    path('edicionTablaIncidencia/<id>/', edicion_tabla_incidencias, name="edicionTablaIncidencia"),
+    path('agregarIncidencia/', agregarIncidencia, name='agregarIncidencia'),
+    path('calculoAforo/', calcularAforo, name='calculoAforo'),
+
+    path('retiroInventario/', inventario_retiro, name='retiroInventario'),
 
     path('password/', PasswordsChangeView.as_view(template_name='accounts/change_password.html'),
          name='password'),
