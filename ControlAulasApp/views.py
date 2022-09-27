@@ -42,37 +42,30 @@ def Estados(request):
     # tablaEstados = EstadoAula.objects.all().order_by('nombreSala') #ordenar por nombre
     # tablaEstados = EstadoAula.objects.filter(nombre= 'sala') #filtar datos
 
-    page = request.GET.get('page', 1)
-
-    try:
-        paginator = Paginator(tablaEstados, 6)
-        tablaEstados = paginator.page(page)
-    except:
-        raise Http404
+    # page = request.GET.get('page', 1)
+    #
+    # try:
+    #     paginator = Paginator(tablaEstados, 10)
+    #     tablaEstados = paginator.page(page)
+    # except:
+    #     raise Http404
 
     data = {
         'titulo': 'Estado de salas',
         'entity': tablaEstados,
-        'paginator': paginator
+        # 'paginator': paginator
     }
     # return render(request, "ControlAulasApp/estadoaulas.html",{"estados": tablaEstados})
     return render(request, "ControlAulasApp/estadoaulas.html", data)
 
 
+# Vista asociada a la visualizacion del horario
 def Horarios(request):
     tablaHorarios = Horario.objects.all()
-    page = request.GET.get('page', 1)
-
-    try:
-        paginator = Paginator(tablaHorarios, 5)
-        tablaHorarios = paginator.page(page)
-    except:
-        raise Http404
 
     data = {
         'titulo': 'Horario de desinfeccion',
         'entity': tablaHorarios,
-        'paginator': paginator
     }
 
     return render(request, "ControlAulasApp/horario.html", data)
@@ -88,17 +81,7 @@ class HorariosListView(ListView):
         return context
 
 
-# def Detallepublicaciones(request, slug):
-#     publicacion = Publicacion.objects.all()
-#     return render(request, "ControlAulasApp/Publicaciones.html", {'detalle_publicacion': publicacion})
-
-
-# def registrar_observacion(request):
-#     observacion = request.POST['txtObservacion']
-#     horario = Horario.objects.create(observacion=observacion)
-#     return redirect('ControAulasApp/horario.html')
-
-
+# vista para registrar y editar las observaciones
 def edicion_tabla(request, id):
     horario = get_object_or_404(Horario, id=id)
 
@@ -117,6 +100,7 @@ def edicion_tabla(request, id):
     return render(request, "ControlAulasApp/edicionTabla.html", data)
 
 
+# Vista asociada a la descarga de archivos
 def download(request, path):
     file_path = os.path.join(settings.MEDIA_ROOT, path)
     if os.path.exists(file_path):
@@ -130,17 +114,9 @@ def download(request, path):
 
 def descarga(request):
     archivo = Archivo.objects.all()
-    page = request.GET.get('page', 1)
-
-    try:
-        paginator = Paginator(archivo, 4)
-        archivo = paginator.page(page)
-    except:
-        raise Http404
 
     context = {
         'entity': archivo,
-        'paginator': paginator
 
     }
     return render(request, 'ControlAulasApp/descarga.html', context)
@@ -149,18 +125,10 @@ def descarga(request):
 def RegistroIncidencias(request):
     tablaRegistros = RegistroIncidencia.objects.all()
 
-    page = request.GET.get('page', 1)
-
-    try:
-        paginator = Paginator(tablaRegistros, 6)
-        tablaRegistros = paginator.page(page)
-    except:
-        raise Http404
-
     data = {
         'titulo': 'Registro de incidencias',
         'entity': tablaRegistros,
-        'paginator': paginator
+
     }
 
     return render(request, "ControlAulasApp/incidencias.html", data)
@@ -204,22 +172,12 @@ def Inventarios(request):
     tablaInventario = Inventario.objects.all()
     tablaRetiro = RetiroInventario.objects.all()
 
-    page = request.GET.get('page', 1)
 
-    try:
-
-        paginator = Paginator(tablaRetiro, 6)
-
-        tablaRetiro = paginator.page(page)
-    except:
-        raise Http404
 
     data = {
         'titulo': 'Inventario',
         'entity2': tablaInventario,
         'entity': tablaRetiro,
-
-        'paginator': paginator,
     }
 
     return render(request, "ControlAulasApp/inventario.html", data)
@@ -265,18 +223,10 @@ def inventario_retiro(request):
 
 def aforoview(request):
     calculo = Aforo.objects.all()
-    page = request.GET.get('page', 1)
-
-    try:
-        paginator = Paginator(calculo, 6)
-        calculo = paginator.page(page)
-    except:
-        raise Http404
 
     data = {
         'titulo': 'Aforo',
         'entity': calculo,
-        'paginator': paginator
     }
     return render(request, 'ControlAulasApp/aforo.html', data)
 

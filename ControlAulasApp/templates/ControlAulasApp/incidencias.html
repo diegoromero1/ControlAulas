@@ -1,6 +1,6 @@
-
-
+{% extends "ControlAulasApp/index.html" %}
 {% load static %}
+{% block contenido %}
 {% if user.is_authenticated %}
 <!DOCTYPE html>
 <html lang="es">
@@ -8,45 +8,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> {{ titulo }}</title>
-    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">
-
-    <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
-    <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
-    <link href="{% static 'vendor/quill/quill.snow.css' %}" rel="stylesheet">
-    <link href="{% static 'vendor/quill/quill.bubble.css' %}" rel="stylesheet">
-    <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet">
-    <link href="{% static 'vendor/simple-datatables/style.css' %}" rel="stylesheet">
-     <link href="{% static 'img/favicon.png' %}" rel="icon">
-     <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
-
-     <link href="https://fonts.gstatic.com" rel="preconnect">
-     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
-       <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-       <link rel="" href="https://cdn.datatables.net/fixedheader/3.1.6/css/fixedHeader.dataTables.min.css">
-      <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-      <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-      <script src="https://cdn.datatables.net/fixedheader/3.1.6/js/dataTables.fixedHeader.min.js"></script>
-
-    <link href="{% static 'css/slider.css' %}" rel="stylesheet">
-
-      <script>
-
-
-$(document).ready(function(){
-    var table = $('#example').DataTable({
-       orderCellsTop: true,
-       fixedHeader: true,
-         "language": {
-      "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-    }
-    });
-});
-
-</script>
-
-
 </head>
 
 <body>
@@ -56,54 +17,21 @@ $(document).ready(function(){
 {#<div class="container.container{height: 100%;} py-4 "  >#}
 <div class="container-fluid py-4 "  >
     <div class="row">
-    <div class="col-lg-5"  >
-
-
-        <div id ="img-slider">
-    <ul class="slider">
-        <li id="slide1">
-            <img src="{% static '' %}" alt="" >
-{#            <img src="https://interpolados.files.wordpress.com/2016/12/content-https-2x.jpg" alt="">#}
-        </li>
-        <li id="slide2">
-            <img src="{% static 'img/seis-pasos.jpg' %}" alt="" width="600" height="600">
-{#            <img src="https://www.globalsign.com/application/files/3916/0397/8810/iStock-833750208.png" alt="">#}
-{#            <h1></h1><p></p><a></a>#}
-        </li>
-    </ul>
-
-    <ul class="menu">
-        <li>
-            <a href="#slide1">1</a>
-        </li>
-        <li>
-            <a href="#slide2">2</a>
-        </li>
-
-    </ul>
-</div>
-
-{#       <img src="{% static 'img/Limpieza.jpg' %}" alt="" width="650" height="800">#}
-
-
-
-
-
-       </div>
-
-        <div class="col-lg-7">
+        <div class="col-lg-offset-6  ">
         <h2>Registro de incidencias COVID</h2>
             <div class="table-responsive">
                 <table id="example" class="table table-hover table-striped table-bordered table-secondary">
           <thead>
-          <tr>
-              <th>#</th>
-              <th>Nombre del Afectado</th>
-              <th>Apellidos del Afectado</th>
-              <th>Nombre del registrante</th>
-              <th>Fecha</th>
-{#              <th>Observacion</th>#}
-              <th colspan="1">Opcion</th>
+          <tr class="table  border-dark">
+              <th style="background-color: cyan">#</th>
+              <th style="background-color: cyan">Nombre del Afectado</th>
+              <th style="background-color: cyan">Apellidos del Afectado</th>
+              <th style="background-color: cyan">Nombre del registrante</th>
+              <th style="background-color: cyan">Fecha</th>
+             <th style="background-color: cyan">Sala</th>
+              <th style="background-color: cyan">Observacion</th>
+              <th style="background-color: cyan">Estado</th>
+              <th style="background-color: cyan" colspan="1">Opcion</th>
           </tr>
 
           </thead>
@@ -115,25 +43,19 @@ $(document).ready(function(){
                       <td>{{ i.apellidosAfectado }}</td>
                        <td>{{ i.nombre_completo }}</td>
                        <td>{{ i.fecha }}</td>
-{#                       <td>{{ h.observacion }}</td>#}
+                       <td>{{ i.nombreSala }}</td>
+                          <td>{{ i.descripcionCaso }}</td>
+                          <td>{{ i.estado }}</td>
                       <td><a href="{% url 'edicionTablaIncidencia' i.id %}" class="btn btn-block btn-info"><i class="bi bi-pencil"></i>Editar</a></td>
 
                       </tr>
           {% endfor %}
           </tbody>
       </table>
-            <div>
-                {% include 'ControlAulasApp/paginator.html' %}
-            </div>
 
             <div>
-                   <a href="{% url 'agregarIncidencia' %}" class="btn btn-block btn-primary">Agregar</a>
+                   <a href="{% url 'agregarIncidencia' %}" class="btn btn-block btn-primary" style="background-color: green"><i class="bi bi-pencil-square"></i> Registrar</a>
 
-            </div>
-
-            <div>
-
-                <td><a href="{% url 'index' %}" class="btn btn-block btn-primary">Inicio</a></td>
             </div>
 
                 {% if messages %}
@@ -146,6 +68,11 @@ $(document).ready(function(){
             {% endif %}
 
             </div>
+        <br>
+        <div>
+
+                <a href="{% url 'index' %}" class="btn btn-block btn-primary"><i class="bi bi-house-fill"></i> Inicio</a>
+            </div>
         </div>
     </div>
 </div>
@@ -157,3 +84,4 @@ $(document).ready(function(){
 {% else %}
         <meta http-equiv="refresh" content="0; url=/" />
     {% endif %}
+{% endblock contenido %}

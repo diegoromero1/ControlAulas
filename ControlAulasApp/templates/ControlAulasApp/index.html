@@ -13,8 +13,8 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="{% static 'img/favicon.png' %}" rel="icon">
-  <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+  <link href="{% static 'img/Control_Aula1.png' %}" rel="icon">
+  <link href="{% static 'img/Control_Aula1.png' %}" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -32,11 +32,32 @@
   <!-- Template Main CSS File -->
   <link href="{% static 'css/style.css' %}" rel="stylesheet">
 
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+       <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
        <link rel="" href="https://cdn.datatables.net/fixedheader/3.1.6/css/fixedHeader.dataTables.min.css">
       <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
       <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
       <script src="https://cdn.datatables.net/fixedheader/3.1.6/js/dataTables.fixedHeader.min.js"></script>
+
+ <script>
+
+
+$(document).ready(function(){
+    var table = $('#example').DataTable({
+        paging: true,
+         "lengthMenu": [ [5,10, 15,25,40, 50, -1], [5,10, 15,25,40, 50, "All"] ],
+        orderCellsTop: true,
+        {#fixedHeader: true,#}
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+        }
+    });
+});
+
+</script>
+
 
   <!-- =======================================================
   * Template Name: NiceAdmin - v2.2.2
@@ -53,7 +74,7 @@
 
     <div class="d-flex align-items-center justify-content-between">
       <a href="{% url 'index' %}" class="logo d-flex align-items-center">
-        <img src="{% static 'img/logo.png' %}" alt="">
+        <img src="{% static 'img/Control_Aula1.png' %}" alt="">
         <span class="d-none d-lg-block">ControlAulas</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -297,7 +318,7 @@
          {% if group == 'Personal'%}
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>Horario de desinfeccion</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-menu-button-wide"></i><span>Horario de desinfección</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
@@ -328,7 +349,7 @@
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
             <a href="{% url 'aforo' %}">
-              <i class="bi bi-circle"></i><span>Calculo de aforo</span>
+              <i class="bi bi-circle"></i><span>Cálculo de aforo</span>
             </a>
           </li>
         </ul>
@@ -1040,7 +1061,7 @@
 {#            </div>#}
 
             <div class="card-body pb-0 " >
-              <h5 class="card-title"> Informacion relevante <span>| Este Dia</span></h5>
+              <h5 class="card-title"> Información relevante <span>| Este Dia</span></h5>
 
                 {% for p in publicaciones %}
 

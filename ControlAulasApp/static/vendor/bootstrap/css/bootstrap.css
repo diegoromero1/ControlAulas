@@ -6052,7 +6052,7 @@ textarea.form-control-lg {
   justify-content: center;
   width: 15%;
   padding: 0;
-  color: #fff;
+  color: #ee0606;
   text-align: center;
   background: none;
   border: 0;
@@ -6068,7 +6068,7 @@ textarea.form-control-lg {
 .carousel-control-prev:hover, .carousel-control-prev:focus,
 .carousel-control-next:hover,
 .carousel-control-next:focus {
-  color: #fff;
+  color: #1f48e0;
   text-decoration: none;
   outline: 0;
   opacity: 0.9;
@@ -6132,7 +6132,7 @@ textarea.form-control-lg {
   margin-left: 3px;
   text-indent: -999px;
   cursor: pointer;
-  background-color: #fff;
+  background-color: red;
   background-clip: padding-box;
   border: 0;
   border-top: 10px solid transparent;

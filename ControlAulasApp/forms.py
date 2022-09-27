@@ -30,10 +30,12 @@ class HorarioForm(forms.ModelForm):
 class RegistroIncidenciaForm(forms.ModelForm):
     class Meta:
         model = RegistroIncidencia
-        fields = ["nombreAfectado"]
+        fields = ["nombreAfectado", "apellidosAfectado", "fecha", "descripcionCaso", "estado"]
 
 
 class AgregarIncidenciaForm(forms.ModelForm):
+    fecha = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}, format="%d/%m/%Y"))
+
     class Meta:
         model = RegistroIncidencia
         fields = '__all__'
@@ -96,14 +98,20 @@ class RetiroInventarioForm(forms.ModelForm):
         model = RetiroInventario
         fields = ["nombrePersonal", "apellidosPersonal", 'fecha', 'hora', "producto", "cantidadUtilizada",
                   ]
-        # widgets = {
-        #
-        #     'fecha': DateTimeInput(attrs={'class': 'form-control'}),
-        #
-        # }
+        widgets = {
+            'producto': forms.TextInput(attrs={'placeholder': 'Nombre exacto de la tabla '}),
+
+        }
 
 
 class AforoForm(forms.ModelForm):
     class Meta:
         model = Aforo
-        fields = ["nombre","largoGeneral","anchoGeneral","largoDemarcacion","anchoDemarcacion"]
+        fields = ["nombre", "largoGeneral", "anchoGeneral", "largoDemarcacion", "anchoDemarcacion"]
+
+        widgets = {
+            'largoGeneral': forms.TextInput(attrs={'placeholder': 'Ingresar medida en cm'}),
+            'anchoGeneral': forms.TextInput(attrs={'placeholder': 'Ingresar medida en cm'}),
+            'largoDemarcacion': forms.TextInput(attrs={'placeholder': 'Ingresar medida en cm'}),
+            'anchoDemarcacion': forms.TextInput(attrs={'placeholder': 'Ingresar medida en cm'})
+        }

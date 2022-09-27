@@ -10,82 +10,97 @@
     <title> {{ titulo }}</title>
 
 
-      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-       <link rel="" href="https://cdn.datatables.net/fixedheader/3.1.6/css/fixedHeader.dataTables.min.css">
-      <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-      <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-      <script src="https://cdn.datatables.net/fixedheader/3.1.6/js/dataTables.fixedHeader.min.js"></script>
-
-
-    <script>
-
-
-$(document).ready(function(){
-    var table = $('#example').DataTable({
-       orderCellsTop: true,
-       fixedHeader: true,
-         "language": {
-      "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-    }
-    });
-});
-
-</script>
-
 </head>
 <body>
+<section class="section">
 <div class="container-fluid py-4">
     <div class="row">
-{#    <div class="col-md-4"></div>#}
-        <div class="col-md-offset-4">
-        <h2>Calculo de aforo</h2>
+
+    <div class="col-lg-5"  >
+
+
+      <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Vista de imagenes</h5>
+
+              <!-- Slides with indicators -->
+              <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                  <button  type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+
+                </div>
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img src="{% static 'img/esquema.jpg' %}" class="d-block w-100" alt="...">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="{% static 'img/esquema.jpg' %}" class="d-block w-100" alt="...">
+                  </div>
+
+
+                <button  class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden" >Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+
+              </div><!-- End Slides with indicators -->
+
+            </div>
+          </div>
+
+         </div>
+     </div>
+    <div class="col-lg-7">
+        <h2>Cálculo de aforo salas de clases</h2>
             <div class="table-responsive">
-                <table id="example" class="table table-hover table-striped table-bordered table-secondary">
+                <table id="example" class="table table-hover table-bordered table-secondary">
           <thead>
           <tr>
-              <th>#</th>
-              <th>Nombre</th>
-              <th>Largo de sala</th>
-              <th>Ancho de sala</th>
-              <th>Largo de demarcacion</th>
-              <th>Ancho de demarcacion</th>
-              <th>Resultado</th>
+              <th style="background-color: #f5864a">#</th>
+              <th style="background-color: #f5864a">Nombre</th>
+              <th style="background-color: #f5864a">Largo de sala</th>
+              <th style="background-color: #f5864a">Ancho de sala</th>
+              <th style="background-color: #f5864a">Largo de demarcacion</th>
+              <th style="background-color: #f5864a">Ancho de demarcacion</th>
+              <th style="background-color: green">Resultado (Aforo)</th>
           </tr>
 
           </thead>
           <tbody>
                   {% for a in entity %}
-                      <tr>
-                      <td>{{ forloop.counter }}</td>
+                      <tr class="table border-dark">
+                      <td style="background-color: #f5864a">{{ forloop.counter }}</td>
                       <td>{{ a.nombre  }}</td>
                       <td>{{ a.largoGeneral }}</td>
                       <td>{{ a.anchoGeneral }}</td>
                       <td>{{ a.largoDemarcacion }}</td>
                       <td>{{ a.anchoDemarcacion }}</td>
-                      <td>{{ a.resultado }}</td>
+                      <td style="background-color: green">{{ a.resultado }}</td>
                       </tr>
           {% endfor %}
           </tbody>
       </table>
             <div>
-                {% include 'ControlAulasApp/paginator.html' %}
+                   <a href="{% url 'calculoAforo' %}" class="btn btn-block btn-primary"><i class="bi bi-calculator-fill"></i> Calcular</a>
             </div>
+
+</div>
+         <br>
             <div>
-                   <a href="{% url 'calculoAforo' %}" class="btn btn-block btn-primary">Agregar</a>
 
-            </div>
-
-
-             <div>
-                <td><a href="{% url 'index' %}" class="btn btn-block btn-primary">Inicio</a></td>
-            </div>
+                <a href="{% url 'index' %}" class="btn btn-block btn-primary"><i class="bi bi-house-fill"></i> Inicio</a>
             </div>
         </div>
-    </div>
+
+  </div>
 </div>
 
-
-
+</section>
 </body>
 </html>
     {% else %}
