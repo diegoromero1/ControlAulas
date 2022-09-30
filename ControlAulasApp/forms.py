@@ -1,4 +1,4 @@
-import self as self
+
 from django import forms
 
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
@@ -65,14 +65,14 @@ class RetiroInventarioForm(forms.ModelForm):
         var = 'inicial'
         # cantidadinv = 100
         for b in Inventario.objects.all():
-            print("AQUI ESTA", b)
+            # print("AQUI ESTA", b)
             if produc == b.nombreProducto:
                 var = b.nombreProducto
                 # cantidadinv = b.cantidadAlmacenada
-                print("Escogida AQUI", var)
+                # print("Escogida AQUI", var)
 
         if produc != var:
-            print("AQUI ESTA la otra", var)
+            # print("AQUI ESTA la otra", var)
             raise forms.ValidationError('nombre no valido')
         return produc
 
@@ -83,14 +83,14 @@ class RetiroInventarioForm(forms.ModelForm):
         cantidadinv = 1
         for b in Inventario.objects.all():
 
-            print("AQUI ESTA", b)
+            # print("AQUI ESTA", b)
             if produc == b.nombreProducto:
                 var = b.nombreProducto
                 cantidadinv = b.cantidadAlmacenada
 
-        print("Escogida AQUI", produc)
+        # print("Escogida AQUI", produc)
         if cantidad > cantidadinv:
-            print("AQUI ESTA la otra", cantidadinv)
+            # print("AQUI ESTA la otra", cantidadinv)
             raise forms.ValidationError('Stock no valido')
         return cantidad
 
