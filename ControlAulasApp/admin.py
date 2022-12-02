@@ -51,7 +51,8 @@ class ArchivoAdmin(admin.ModelAdmin):
 
 @admin.register(RegistroIncidencia)
 class RegistroIncidenciaAdminAdmin(admin.ModelAdmin):
-    list_display = ('id', 'nombre_completo', 'nombreAfectado', 'apellidosAfectado', 'fecha')
+    list_display = ('id', 'nombre_completo', 'nombreAfectado', 'apellidosAfectado', 'fecha','estado',)
+    list_filter = ('apellidosAfectado','estado','apellidosRegistrante',)
 
     def datos(self, obj):
         return obj.nombre.upper()
@@ -60,6 +61,8 @@ class RegistroIncidenciaAdminAdmin(admin.ModelAdmin):
 @admin.register(Inventario)
 class InventarioAdmin(admin.ModelAdmin):
     list_display = ('id', 'nombreProducto', 'cantidadAlmacenada')
+    list_filter = ('nombreProducto',)
+    list_editable = ('cantidadAlmacenada',)
 
     def datos(self, obj):
         return obj.nombre.upper()
@@ -68,6 +71,7 @@ class InventarioAdmin(admin.ModelAdmin):
 @admin.register(RetiroInventario)
 class RetiroInventarioAdmin(admin.ModelAdmin):
     list_display = ('id', 'nombre_completo', 'fecha', 'hora', 'cantidadUtilizada', 'producto')
+    list_filter = ('apellidosPersonal','fecha','producto')
 
     def datos(self, obj):
         return obj.nombre.upper()

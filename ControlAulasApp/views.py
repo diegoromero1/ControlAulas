@@ -161,7 +161,7 @@ def agregarIncidencia(request):
         formulario = AgregarIncidenciaForm(data=request.POST, files=request.FILES)
         if formulario.is_valid():
             formulario.save()
-            messages.success(request, "Modificado correctamente")
+            messages.success(request, "Se agrego correctamente")
             return redirect(to="incidencias")
         data["form"] = formulario
 
@@ -196,7 +196,7 @@ def inventario_retiro(request):
 
             formulario.save()
 
-            messages.success(request, "Modificado correctamente")
+            messages.success(request, "Se registro el retiro correctamente ")
             # print("hola mundo", RetiroInventario.objects.get('producto'))
             # ultimo = len(RetiroInventario.objects.all())
             # print("Cantidad", ultimo)
