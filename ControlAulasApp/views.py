@@ -196,10 +196,8 @@ def inventario_retiro(request):
 
             formulario.save()
 
-            messages.success(request, "Se registro el retiro correctamente ")
+            messages.success(request, "Se registro el retiro correctamente")
             # print("hola mundo", RetiroInventario.objects.get('producto'))
-            # ultimo = len(RetiroInventario.objects.all())
-            # print("Cantidad", ultimo)
             # n = RetiroInventario.objects.get('nombrePersonal')[(ultimo-1):ultimo]
             n = RetiroInventario.objects.order_by('id').last()
             # print("hola mundo", n.producto)
